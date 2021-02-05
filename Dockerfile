@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM ubtcaomeng/ros-msckf-vio
 
 # Install git, supervisor, VNC, & X11 packages
 RUN set -ex; \
@@ -12,7 +12,8 @@ RUN set -ex; \
       supervisor \
       x11vnc \
       xterm \
-      xvfb
+      xvfb\
+      terminator
 
 # Setup demo environment variables
 ENV HOME=/root \
@@ -26,5 +27,6 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 COPY . /app
+RUN mkdir /data
 CMD ["/app/entrypoint.sh"]
 EXPOSE 8080
