@@ -1,17 +1,26 @@
-version: '2'
+version: '3.4'
 services:
-  novnc:  
-    image: realjc/msckf-vio:v3
-    environment:
-      # Adjust to your screen size
-      - DISPLAY_WIDTH=1600
-      - DISPLAY_HEIGHT=968
+  # cpu development:
+  env_for_loam:
+    # build:
+    #   context: docker
+    #   dockerfile: Dockerfile
+    #   network: host
+    image: realjc/loam_env:v1
+    container_name: env_for_loam
+    privileged: true
+    # environment:
+    #     # set VNC login password here:
+    #     - VNC_PASSWORD=sensorfusion
+    # volumes:
+    #   # mount your workspace here:
+    #   - $PWD/workspace:/workspace
     ports:
-      - "8080:8080"
-    networks:
-      - x11
-    volumes:
-      # mount your workspace here:
-      - ~/Documents/Euroc:/data
-networks:
-  x11:
+      # HTML5 VNC:
+      - 40080:80
+      # standard VNC client:
+      - 45901:5901
+      # supervisord admin:
+      - 49001:9001
+      # # ROS master:
+      # - 11311:11311
